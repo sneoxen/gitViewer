@@ -320,7 +320,7 @@ ini_set('display_errors', 1);
 		</style>
 	</head>
 	<body style="margin:0px; padding:0px">
-		<div><img src="/images/big-logo-manorga.png" /><?php echo 'Nom du projet : Portail'?></div>
+		<div><?php echo 'Nom du projet : Portail'?></div>
 		<div id="mainWrapper">
 			<?php $oGitProject=new \git\Interpretor('/home/neoxen/workspace/speexit');	?>
 		</div>
