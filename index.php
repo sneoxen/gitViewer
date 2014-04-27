@@ -80,249 +80,152 @@ ini_set('display_errors', 1);
 				text-transform: uppercase;
 			}
 
-			.arrowFollowRight{
-				position:absolute;
-				height:30px;
-				display:block;
-			}
-			.arrowFollowRight .end{
-				border-bottom: 15px solid transparent;
-				border-left-width: 20px;
-				border-left-style: solid;
-				border-top: 15px solid transparent;
-				height: 0;
-				background-color:transparent;
-				width: 0;
-				position:absolute;
-				right:-2px;
-				z-index:1;
-				display:inline-block;
-				border-radius:15px;
-			}
-			.arrowFollowRight .endWhite{
-				border-radius:15px;
-				border-bottom: 15px solid transparent;
-				border-left: 20px solid white;
-				border-top: 15px solid transparent;
-				height: 0;
-				width: 0;
-				position:absolute;
-				right:5px;
-				z-index:2;
-				display:inline-block;
-			}
-			.arrowFollowRight .body{
-				display:inline-block;
-				width:100%;
-				position:absolute;
-				height:4px;
-				/*background-color:#ADADAE;*/
-				border-radius:5px;
-				left:0px;
-				top:13px;
-				z-index:3;
-				border-radius:4px;
-			}
-			.arrowFollowDown{
-				position:absolute;
-				display:block;
-
-				transform-origin: 0px 0px;
-			}
-			.arrowFollowDown .end{
-				border-radius:15px;
-				border-left: 15px solid transparent;
-				border-top: 20px solid #ADADAE;
-				border-right: 15px solid transparent;
-				height: 0;
-				width: 0;
-				position:absolute;
-				bottom:-14px;
-				left:-13px;
-				z-index:1;
-				display:inline-block;
-			}
-			.arrowFollowDown .endWhite{
-				border-radius:15px;
-				border-left: 15px solid transparent;
-				border-top: 20px solid white;
-				border-right: 15px solid transparent;
-				height: 0;
-				width: 0;
-				position:absolute;
-				bottom:-8px;
-				left:-13px;
-				z-index:2;
-				display:inline-block;
-			}
-			.arrowFollowDown .body{
-				display:inline-block;
-				height:100%;
-				position:absolute;
-				width:4px;
-				background-color:#ADADAE;
-				border-radius:5px;
-				top:13px;
-				left:0px;
-				z-index:3;
-				border-radius:4px;
+			.arrow_box > span:first-child +div > p{
+				max-width:300px;
+				margin:3px 0;
 			}
 
-			.arrowFollowUp {
-				position:absolute;
-				display:block;
-				transform-origin: 46px 3px;
-			}
-			.arrowFollowUp .end{
-				border-radius:15px;
-				border-left: 15px solid transparent;
-				border-bottom: 20px solid #ADADAE;
-				border-right: 15px solid transparent;
-				height: 0;
-				width: 0;
-				position:absolute;
-				top:-14px;
-				left:-13px;
-				z-index:1;
-				display:inline-block;
-			}
-			.arrowFollowUp .endWhite{
-				border-radius:15px;
-				border-left: 15px solid transparent;
-				border-bottom: 20px solid white;
-				border-right: 15px solid transparent;
-				height: 0;
-				width: 0;
-				position:absolute;
-				top:-8px;
-				left:-13px;
-				z-index:2;
-				display:inline-block;
-			}
-			.arrowFollowUp .body{
-				display:inline-block;
-				height:100%;
-				position:absolute;
-				width:4px;
-				background-color:#ADADAE;
-				border-radius:5px;
-				top:13px;
-				left:0px;
-				z-index:3;
-				border-radius:4px;
-			}
 
-			/*.actionPoint:hover + .arrow_box{
-				display:block;
-			}*/
+			<?php
+				$aArrowDirection=array(
+					/*'left'=>array(
+					),*/
+					'right'=>array(
+						'borderDirection'=>array(
+							'bottom','left','top'
+						),
+						'borderOffset'=>array(
+							array(
+								'direction'=>'right',
+								'value'=>-2
+							)
+						),
+						'body'=>array(
+							'width'=>'100%',
+							'height'=>'4px',
+							'top'=>'13px'
+						)
+					),
+					'up'=>array(
+						'borderDirection'=>array(
+							'left','bottom','right'
+						),
+						'borderOffset'=>array(
+							array(
+								'direction'=>'top',
+								'value'=>-14
+							),
+							array(
+								'direction'=>'left',
+								'value'=>-13
+							)
+						),
+						'body'=>array(
+							'height'=>'100%',
+							'width'=>'4px'
+						)
+					),
+					'down'=>array(
+						'borderDirection'=>array(
+							'left','top','right'
+						),
+						'borderOffset'=>array(
+							array(
+								'direction'=>'bottom',
+								'value'=>-14,
+							),
+							array(
+								'direction'=>'left',
+								'value'=>-13
+							)
+						),
+						'body'=>array(
+							'height'=>'100%',
+							'width'=>'4px'
+						)
+					)
+				);
+
+				foreach($aArrowDirection as $direction=>$aDataInfoDirection){
+					// direction
+					echo '.arrowFollow'. ucfirst($direction) .'{position:absolute;display:block}'."\n";
+
+					//arrow end
+					echo '.arrowFollow'. ucfirst($direction) .' .end{'.
+							'border-'. $aDataInfoDirection['borderDirection'][0] .': 15px solid transparent;'.
+							'border-'. $aDataInfoDirection['borderDirection'][1] .'-width: 20px;'.
+							'border-'. $aDataInfoDirection['borderDirection'][1] .'-style: solid;'.
+							'border-'. $aDataInfoDirection['borderDirection'][2] .': 15px solid transparent;'.
+							'height: 0;'.
+							'background-color:transparent;'.
+							'width: 0;'.
+							'position:absolute;';
+					foreach($aDataInfoDirection['borderOffset'] as $aDataForArrowBorder){
+						echo $aDataForArrowBorder['direction'].':'. $aDataForArrowBorder['value'] .'px;';
+					}
+					echo	'z-index:1;'.
+							'display:inline-block;'.
+							'border-radius:15px}'."\n";
+
+					//arrow end white shadow
+					echo '.arrowFollow'. ucfirst($direction) .' .endWhite{'.
+							'border-'. $aDataInfoDirection['borderDirection'][0] .': 15px solid transparent;'.
+							'border-'. $aDataInfoDirection['borderDirection'][1] .'-width: 20px;'.
+							'border-'. $aDataInfoDirection['borderDirection'][1] .'-style: solid;'.
+							'border-'. $aDataInfoDirection['borderDirection'][2] .': 15px solid transparent;'.
+							'height: 0;'.
+							'width: 0;'.
+							'color: #FFFFFF;'.
+							'position:absolute;';
+					foreach($aDataInfoDirection['borderOffset'] as $inc=>$aDataForArrowBorder){
+						echo $aDataForArrowBorder['direction'].':'. ($aDataForArrowBorder['value']+($inc==0 ? 7 : 0 )) .'px;';
+					}
+					echo	'z-index:2;'.
+							'background-color:transparent;'.
+							'display:inline-block;'.
+							'border-radius:15px}'."\n";
 
 
-			.yellow{
-				background-color:#fbed37;
-				border-color:#edd355;
-				color:#ad9a3c;
-			}
-			.arrowFollowRight .body.yellow{
-				background-color:#edd355;
+					echo '.arrowFollow'. ucfirst($direction) .' .body{'.
+							'display:inline-block;'.
+							'position:absolute;'.
+							'border-radius:4px;'.
+							'z-index:3;';
+					foreach($aDataInfoDirection['body'] as $attr=>$value){
+						echo $attr.':'. $value .';';
+					}
+					echo '}'."\n";
 
-			}
-			.arrowFollowDown .end.yellow,
-			.arrowFollowRight .end.yellow{
-				border-left-color:#edd355;
+					foreach(\git\Branch::getAllBranchColorInfo() as $aColorInfo){
+						echo '.arrowFollow'. ucfirst($direction) .' .body.'. $aColorInfo['class'] .'{
+							background-color:'. $aColorInfo['second'] .';'.
+						'}'."\n";
 
-			}
+						echo '.arrowFollow'. ucfirst($direction) .' .body.'. $aColorInfo['class'] .'{'.
+							'border-left-color:'. $aColorInfo['second'] .';'.
+						'}'."\n";
 
-			.blue{
-				background-color:#78CFEB;
-				border-color:#56AFE4;
-				color:#4587ae;
-			}
-			.arrowFollowRight .body.blue{
-				background-color:#56AFE4;
-			}
-			.arrowFollowRight .end.blue,
-			.arrowFollowRight .end.blue{
-				border-left-color:#56AFE4;
-			}
+					}
+				}
 
-			.green{
-				background-color:#BCD54B;
-				border-color:#9EC61C;
-				color:#778c31;
-			}
-			.arrowFollowRight .body.green{
-				background-color:#9EC61C;
-			}
-			.arrowFollowDown .end.green,
-			.arrowFollowRight .end.green{
-				border-left-color:#9EC61C;
-			}
-
-			.orange{
-				background-color:#F9A55E;
-				border-color:#F59044;
-				color:#c86921;
-			}
-			.arrowFollowRight .body.orange{
-				background-color:#F59044;
-			}
-			.arrowFollowRight .end.orange{
-				border-left-color:#F59044;
-			}
-			.arrowFollowDown .end.orange{
-				border-top-color:#F59044;
-			}
-
-			.purple{
-				background-color:#C899C6;
-				border-color:#AE74B2;
-				color:#8e5192;
-			}
-			.arrowFollowRight .body.purple{
-				background-color:#AE74B2;
-			}
-			.arrowFollowRight .end.purple{
-				border-left-color:#AE74B2;
-			}
-			.arrowFollowDown .end.purple{
-				border-top-color:#AE74B2;
-			}
-
-			.red{
-				background-color:#F2695F;
-				border-color:#E33B3C;
-				color:#c31c1c;
-			}
-			.arrowFollowRight .body.red{
-				background-color:#E33B3C;
-			}
-			.arrowFollowRight .end.red{
-				border-left-color:#E33B3C;
-			}
-			.arrowFollowDown .end.red{
-				border-top-color:#E33B3C;
-			}
-
-			.grey{
-				background-color:#D0D1D1;
-				border-color:#ADADAE;
-				color:#808081;
-			}
-			.arrowFollowRight .body.grey{
-				background-color:#ADADAE;
-			}
-			.arrowFollowRight .end.grey{
-				border-left-color:#ADADAE;
-			}
-			.arrowFollowDown .end.grey{
-				border-top-color:#ADADAE;
-			}
+				foreach(\git\Branch::getAllBranchColorInfo() as $aColorInfo){
+					echo '.'.$aColorInfo['class'].'{'.
+						'background-color:'.$aColorInfo['first'].';'.
+						'border-color:'.$aColorInfo['second'].';'.
+						'color:'.$aColorInfo['third'].';'.
+					'}'."\n";
+				}
+			?>
 		</style>
 	</head>
 	<body style="margin:0px; padding:0px">
-		<div><?php echo 'Nom du projet : Portail'?></div>
+		<div><?php ?></div>
 		<div id="mainWrapper">
-			<?php $oGitProject=new \git\Interpretor('/home/neoxen/workspace/speexit');	?>
+			<?php $oGitProject=new \git\Interpretor('/home/neoxen/workspace/speexit'); ?>
 		</div>
+		<script type="text/javascript">
+			//we need to get last action to retrieve width of wrapper
+			var lastActionLeftOffset=<?php echo (\git\History::getLastActionNumber()*\git\GraphElement::pointMargin)+\git\GraphElement::pointSize; ?>
+		</script>
 	</body>
 </html>

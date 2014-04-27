@@ -16,18 +16,19 @@ class Branch {
 		5=>array('class'=>'red','first'=>'#F2695F','second'=>'#E33B3C','third'=>'#c31c1c'),
 		6=>array('class'=>'grey','first'=>'#D0D1D1','second'=>'#ADADAE','third'=>'#808081')
 	);
-	
+
 	private $aActionOnBranch=array();
 	private $branchNumber=0;
-	
-	private function __construct(){
+	private $branchName=null;
+	private function __construct($branchName){
 		$this->branchNumber=count(self::$aObjectBranch);
+		$this->branchName=$branchName;
 	}
-	
-	function addAction($type,$actionNumber){	
+
+	function addAction($type,$actionNumber){
 		$this->aActionOnBranch[$actionNumber]=$type;
 	}
-	
+
 	function getCreationActionNumber(){
 		return key($this->aActionOnBranch);
 	}
@@ -36,19 +37,19 @@ class Branch {
 		reset($this->aActionOnBranch);
 		return $endNumber;
 	}
-	
+
 	function getBranchActionNumber(){
 		return count($this->aActionOnBranch);
 	}
-	
+
 	function getAction(){
 		return $this->aActionOnBranch;
 	}
-	
+
 	function getBranchNumber(){
 		return $this->branchNumber;
 	}
-	
+
 	function getNextActionNumber($beginStartNumber){
 		$captureNextKey=false;
 		foreach($this->aActionOnBranch as $actionNumber=>$aData){
@@ -59,13 +60,22 @@ class Branch {
 		}
 		return $actionNumber;
 	}
-	
+
 	function getBranchColor($type='class'){
 		$offsetNumber=$this->getBranchNumber()/count(self::$branchColor);
 		$offsetNumber=floor($offsetNumber);
-		
+
 //		var_dump($this->getBranchNumber()-(count(self::$branchColor)*$offsetNumber));
 		return self::$branchColor[$this->getBranchNumber()-(count(self::$branchColor)*$offsetNumber)][$type];
+	}
+
+	function changeBranchName($newName){
+		$aOldBranchObject=self::$aObjectBranch;
+		self::$aObjectBranch=array();
+		foreach($aOldBranchObject as $branchName=>$aBranchValue){
+			if($branchName==$this->branchName) $branchName=$newName;
+			self::$aObjectBranch[$branchName]=$aBranchValue;
+		}
 	}
 	/**
 	 * Singleton branch
@@ -73,16 +83,20 @@ class Branch {
 	 * @return self
 	 */
 	static function getInst($branchName){
-		if(!isset(self::$aObjectBranch[$branchName])) self::$aObjectBranch[$branchName]=new self();
+		if(!isset(self::$aObjectBranch[$branchName])) self::$aObjectBranch[$branchName]=new self($branchName);
 		return self::$aObjectBranch[$branchName];
 	}
-	
+
 	static function getAllBranch(){
 		return self::$aObjectBranch;
 	}
-	
+
 	static function getObjectByNumber($actionNumber){
 		$actionData=History::getInst()->getAction($actionNumber);
 		return self::getInst($actionData['branch']);
+	}
+
+	static function getAllBranchColorInfo(){
+		return self::$branchColor;
 	}
 }

@@ -6,7 +6,7 @@ namespace git;
  * @author rbrunin
  */
 class Interpretor {
-	
+
 	function __construct($projectPathFile){
 		Executor::getInst()->setPathFile($projectPathFile);
 		$this->createHistoryLine();
@@ -14,21 +14,21 @@ class Interpretor {
 		//$this->orderBranchByLifeTime();
 		$this->displayGraph();
 	}
-	
+
 	function createHistoryLine(){
 		$aHistoryLine=Executor::getInst()->getHistoryLine();
 		foreach($aHistoryLine as $formatStringInfo){
 			History::getInst()->extractAndAddAction($formatStringInfo);
 		}
 	}
-	
+
 	/**
 	 * Add active branch parameters on branch already active on project and not delete
 	 */
 	function setActiveBranch(){
-		
+
 	}
-	
+
 	function orderBranchByLifeTime(){
 		//by default, branch is create by first number creation
 		/*@var $oBranch Branch*/
@@ -41,10 +41,10 @@ class Interpretor {
 			$oGraphElement->drawBranch($branchName);
 		}
 	}
-	
+
 	function displayGraph(){
 		$oGraphElement=new GraphElement();
-		
+
 		/*@var $oBranch Branch*/
 		foreach(Branch::getAllBranch() as $branchName=>$oBranch){
 			$oGraphElement->drawBranch($branchName);
