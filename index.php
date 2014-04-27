@@ -132,7 +132,7 @@ ini_set('display_errors', 1);
 						'borderOffset'=>array(
 							array(
 								'direction'=>'bottom',
-								'value'=>-14,
+								'value'=>-2,
 							),
 							array(
 								'direction'=>'left',
