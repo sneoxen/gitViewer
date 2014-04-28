@@ -19,10 +19,18 @@ class Branch {
 
 	private $aActionOnBranch=array();
 	private $branchNumber=0;
+	private $displayGraphBranchNumber=0;
+	private $isActualWorkingBranch=false;
 	private $branchName=null;
+
+
 	private function __construct($branchName){
 		$this->branchNumber=count(self::$aObjectBranch);
 		$this->branchName=$branchName;
+	}
+
+	function setActualWorkingBranch(){
+		$this->isActualWorkingBranch=true;
 	}
 
 	function addAction($type,$actionNumber){
@@ -32,10 +40,11 @@ class Branch {
 	function getCreationActionNumber(){
 		return key($this->aActionOnBranch);
 	}
+	
 	function getLastActionNumber(){
-		$endNumber=key(end($this->aActionOnBranch));
-		reset($this->aActionOnBranch);
-		return $endNumber;
+		$aKeys=array_keys($this->aActionOnBranch);
+		return end($aKeys);
+
 	}
 
 	function getBranchActionNumber(){
@@ -48,6 +57,14 @@ class Branch {
 
 	function getBranchNumber(){
 		return $this->branchNumber;
+	}
+
+	function setDisplayGraphBranchNumber($number){
+		$this->displayGraphBranchNumber=$number;
+	}
+	
+	function getDisplayGraphBranchNumber(){
+		return $this->displayGraphBranchNumber;
 	}
 
 	function getNextActionNumber($beginStartNumber){
@@ -76,6 +93,11 @@ class Branch {
 			if($branchName==$this->branchName) $branchName=$newName;
 			self::$aObjectBranch[$branchName]=$aBranchValue;
 		}
+		$this->branchName=$newName;
+	}
+	
+	function getBranchName(){
+		return $this->branchName;
 	}
 	/**
 	 * Singleton branch
