@@ -3,7 +3,7 @@ namespace git;
 /**
  * Description of Executor
  *
- * @author rbrunin
+ * @author neoxen
  */
 class Executor {
 	private $projectPathFile=null;

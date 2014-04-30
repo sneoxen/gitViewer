@@ -3,18 +3,21 @@ namespace git;
 /**
  * Description of branch
  *
- * @author rbrunin
+ * @author neoxen
  */
 class Branch {
 	static $aObjectBranch=array();
 	static $branchColor=array(
-		0=>array('class'=>'yellow','first'=>'#fbed37','second'=>'#edd355','third'=>'#ad9a3c'), // first => BG color | second : border color | third : text Color
-		1=>array('class'=>'blue','first'=>'#78CFEB','second'=>'#56AFE4','third'=>'#4587ae'),
-		2=>array('class'=>'green','first'=>'#BCD54B','second'=>'#9EC61C','third'=>'#778c31'),
-		3=>array('class'=>'orange','first'=>'#F9A55E','second'=>'#F59044','third'=>'#c86921'),
-		4=>array('class'=>'purple','first'=>'#C899C6','second'=>'#AE74B2','third'=>'#8e5192'),
-		5=>array('class'=>'red','first'=>'#F2695F','second'=>'#E33B3C','third'=>'#c31c1c'),
-		6=>array('class'=>'grey','first'=>'#D0D1D1','second'=>'#ADADAE','third'=>'#808081')
+		array('class'=>'black','first'=>'#4E4E4E','second'=>'#606060','third'=>'#CCCCCC'),
+		array('class'=>'yellow','first'=>'#fbed37','second'=>'#edd355','third'=>'#ad9a3c'), // first => BG color | second : border color | third : text Color
+		array('class'=>'blue','first'=>'#78CFEB','second'=>'#56AFE4','third'=>'#4587ae'),
+		array('class'=>'green','first'=>'#BCD54B','second'=>'#9EC61C','third'=>'#778c31'),
+		array('class'=>'grey','first'=>'#D0D1D1','second'=>'#ADADAE','third'=>'#808081'),
+		array('class'=>'orange','first'=>'#F9A55E','second'=>'#F59044','third'=>'#c86921'),
+		array('class'=>'purple','first'=>'#C899C6','second'=>'#AE74B2','third'=>'#8e5192'),
+		array('class'=>'red','first'=>'#F2695F','second'=>'#E33B3C','third'=>'#c31c1c'),
+		//array('class'=>'emerald','first'=>'#a0c79a','second'=>'#52864a','third'=>'#167d50'),
+		array('class'=>'white','first'=>'#FFFFFF','second'=>'#E0E0E0','third'=>'#000000')
 	);
 
 	private $aActionOnBranch=array();

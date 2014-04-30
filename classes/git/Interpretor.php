@@ -3,7 +3,7 @@ namespace git;
 /**
  * Description of Interpretor
  *
- * @author rbrunin
+ * @author neoxen
  */
 class Interpretor {
 
@@ -30,20 +30,10 @@ class Interpretor {
 	function orderBranchByLifeTime(){
 		//by default, branch is create by first number creation
 		/*@var $oBranch Branch*/
-		var_dump('decallage');
-		var_dump('decallage');
-		var_dump('decallage');
-		var_dump('decallage');
-		var_dump('decallage');
-		var_dump('decallage');
-		var_dump('decallage');
 		
 		$aBranchLife=array(); // array with all branch during lifetime
 		$incBranchNumber=0;
 		$lastBranchNumber=0; // this variable contain the last display branch number at any time
-		//$lastBranchName=null; //this variable contain last branchName lifetime
-		//$oLastBranch=null; //this variable contain lastbranch treat
-	//	$aTest=array(); // test
 		
 		$lastBranchNameAdd=null;
 		foreach(Branch::getAllBranch() as $branchName=>$oBranch){
@@ -66,8 +56,6 @@ class Interpretor {
 				$lastBranchNumber=Branch::getInst($lastBranchNameAdd)->getDisplayGraphBranchNumber()+1;
 			}
 			
-			
-			
 			$aBranchLife[$lastBranchNumber]=$oBranch->getBranchName();
 			$oBranch->setDisplayGraphBranchNumber($lastBranchNumber);
 			$incBranchNumber++;			
@@ -82,6 +70,5 @@ class Interpretor {
 		foreach(Branch::getAllBranch() as $branchName=>$oBranch){
 			$oGraphElement->drawBranch($branchName);
 		}
-		//var_dump(Branch::getAllBranch());
 	}
 }

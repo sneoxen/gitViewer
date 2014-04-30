@@ -3,7 +3,7 @@ namespace git;
 /**
  * Description of GraphElement
  *
- * @author rbrunin
+ * @author neoxen
  */
 class GraphElement {
 	const pointSize=30;
@@ -51,9 +51,57 @@ class GraphElement {
 				//var_dump(History::getInst()->getAction($actionNumber));
 				$this->drawCheckoutArrowFollowBranch($actionNumber);
 			}
+			if($actionType=='merge'){
+				$this->drawMergeArrow($actionNumber);
+			}
 		}
 	}
 
+	function drawMergeArrow($actionNumber){
+		$aActionData=History::getInst()->getAction($actionNumber);
+		$branchSource=Branch::getInst($aActionData['branch']);
+		$branchMerging=Branch::getInst($aActionData['mergingBranch']);
+		
+		$branchOffsetNumber=$branchSource->getDisplayGraphBranchNumber()-$branchMerging->getDisplayGraphBranchNumber();
+		if($branchOffsetNumber<0){
+			//merge with up arrow
+			$branchOffsetNumber*=-1;
+			$arrowBodySize=($branchOffsetNumber*self::pointMargin)+6;//6 for border
+			$realArrowBodySize=sqrt(pow($arrowBodySize-(1.5*self::pointSize),2)+pow(self::pointMargin-1.5*self::pointSize,2));
+			
+			$angle = (self::pointMargin)/($arrowBodySize);
+			$angle = (180*atan($angle))/ pi();
+			$angle=180-$angle;
+			?>
+			<div class="arrowFollowDown <?php echo $branchMerging->getBranchColor() ?>"
+				 style="
+					transform: rotate(-<?php echo $angle?>deg);
+					transform-origin:0 0;
+					height:<?= ($realArrowBodySize) ?>px;
+					top:<?= (($branchMerging->getDisplayGraphBranchNumber())*self::pointMargin)+6-(self::pointSize/3); //6 for border?>px;
+					left:<?= (($actionNumber-1)*self::pointMargin)+(self::pointSize)+6 ?>px">
+				<span class="body" style="
+					background: linear-gradient(
+						to bottom,
+						<?= $branchMerging->getBranchColor('second') ?> 0%,
+						<?= $branchMerging->getBranchColor('second') ?> 40%,
+						<?= $branchSource->getBranchColor('second') ?> 70%,
+						<?= $branchSource->getBranchColor('second') ?> 100%
+					);
+				"></span>
+				<span class="endWhite"></span>
+				<span class="end <?= $branchSource->getBranchColor() ?>"></span>
+			</div><?php
+					
+		}
+		else{
+			//merge with down arrow
+			
+		}
+		
+		//var_dump($branchOffsetNumber);
+	}
+	
 	function drawCheckoutArrowFollowBranch($actionNumber){
 		$aActionData=History::getInst()->getAction($actionNumber);
 		$oBranchSource=Branch::getInst($aActionData['sourceBranch']);
@@ -83,7 +131,7 @@ class GraphElement {
 					transform: rotate(-<?php echo $angle?>deg);
 					transform-origin:0 0;
 					height:<?= ($realBranchSize) ?>px;
-					top:<?= ($oBranchSource->getDisplayGraphBranchNumber()*self::pointMargin)+(1.2*self::pointSize) ?>;
+					top:<?= ($oBranchSource->getDisplayGraphBranchNumber()*self::pointMargin)+(1.2*self::pointSize) ?>px;
 					left:<?= (($actionNumber-1)*self::pointMargin)+(1.2*self::pointSize) ?>px">
 				<span class="body" style="
 					background: linear-gradient(
@@ -100,13 +148,7 @@ class GraphElement {
 		}
 		else{
 			return true;
-			$branchSize*=-1;
-			//up
-			?><div class="arrowFollowUp" style="height:<?= $branchSize-(2*self::pointSize/3) ?>px;top:<?= ($branchOffsetNumber*self::pointMargin) ?>;left:<?= (($actionNumber-1)*self::pointMargin)+(self::pointSize/2)  ?>px">
-				<span class="body"></span>
-				<span class="endWhite"></span>
-				<span class="end"></span>
-			</div><?php
+			// Not implement  because not use 
 		}
 
 	}
@@ -137,9 +179,6 @@ class GraphElement {
 	}
 
 	function drawArrowFollow($actionNumber){
-
-		//$oBranch=Branch::getObjectByNumber($actionNumber);
-
 		$nextActionNumber=$this->lastObjectBranch->getNextActionNumber($actionNumber);
 		if($nextActionNumber-$actionNumber<=0) return false;
 		?><div class="arrowFollowRight" style="width:<?= ($nextActionNumber-$actionNumber)*(self::pointMargin)-50 ?>px;top:<?= ($this->lastObjectBranch->getDisplayGraphBranchNumber()*self::pointMargin) ?>;left:<?= ($actionNumber*self::pointMargin)+self::pointSize+15  ?>px">

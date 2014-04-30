@@ -219,8 +219,8 @@ ini_set('display_errors', 1);
 		</style>
 	</head>
 	<body style="margin:0px; padding:0px">
-		<div><?php ?></div>
-		<div id="mainWrapper">
+		<div><?php ?><br /></div>
+		<div id="mainWrapper"><br /><br /><br />
 			<?php $oGitProject=new \git\Interpretor('/home/neoxen/workspace/speexit'); ?>
 		</div>
 		<script type="text/javascript">

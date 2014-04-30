@@ -3,7 +3,7 @@ namespace git;
 /**
  * Description of History
  *
- * @author rbrunin
+ * @author neoxen
  */
 class History {
 	private $aSearchPattern=array(
