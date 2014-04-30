@@ -5,8 +5,7 @@ namespace git;
  *
  * @author neoxen
  */
-class Interpretor {
-
+class Interpretor {	
 	function __construct($projectPathFile){
 		Executor::getInst()->setPathFile($projectPathFile);
 		$this->createHistoryLine();
@@ -34,7 +33,7 @@ class Interpretor {
 		$aBranchLife=array(); // array with all branch during lifetime
 		$incBranchNumber=0;
 		$lastBranchNumber=0; // this variable contain the last display branch number at any time
-		
+		$maxBranchNumber=0; // this variable contain max branch display number 
 		$lastBranchNameAdd=null;
 		foreach(Branch::getAllBranch() as $branchName=>$oBranch){
 			
@@ -57,9 +56,11 @@ class Interpretor {
 			}
 			
 			$aBranchLife[$lastBranchNumber]=$oBranch->getBranchName();
+			if($lastBranchNumber>$maxBranchNumber)$maxBranchNumber=$lastBranchNumber;
 			$oBranch->setDisplayGraphBranchNumber($lastBranchNumber);
-			$incBranchNumber++;			
+			$incBranchNumber++;
 		}
+		GraphElement::setMaxDisplayNumber($maxBranchNumber);
 		
 	}
 

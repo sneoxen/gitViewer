@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	$('#mainWrapper').css('width',lastActionLeftOffset+'px');
+	$('#mainWrapper').css('width',(lastActionLeftOffset+100)+'px');
+	$('#mainWrapper').css('min-height',(heightDisplayOffset+200)+'px');
 	$('.actionPoint').hover(function(){
 		var objectInfoAction=$(this).next();
 		objectInfoAction.show();

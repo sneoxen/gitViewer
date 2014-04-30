@@ -20,7 +20,7 @@ ini_set('display_errors', 1);
 			}
 
 			#mainWrapper{
-				margin:0 0 0 10px;
+				margin:0 0 0 75px;
 				position:relative;
 				width:auto;
 				height:auto;
@@ -42,7 +42,6 @@ ini_set('display_errors', 1);
 				display:inline-block;
 				vertical-align:middle;
 			}
-
 
 			.arrow_box {
 				position: absolute;
@@ -84,7 +83,6 @@ ini_set('display_errors', 1);
 				max-width:300px;
 				margin:3px 0;
 			}
-
 
 			<?php
 				$aArrowDirection=array(
@@ -225,7 +223,8 @@ ini_set('display_errors', 1);
 		</div>
 		<script type="text/javascript">
 			//we need to get last action to retrieve width of wrapper
-			var lastActionLeftOffset=<?php echo (\git\History::getLastActionNumber()*\git\GraphElement::pointMargin)+\git\GraphElement::pointSize; ?>
+			var lastActionLeftOffset=<?php echo (\git\History::getLastActionNumber()*\git\GraphElement::pointMargin)+\git\GraphElement::pointSize; ?>;
+			var heightDisplayOffset=<?php echo (\git\GraphElement::getMaxDisplayNumber()*\git\GraphElement::pointMargin)+\git\GraphElement::pointSize; ?>;
 		</script>
 	</body>
 </html>

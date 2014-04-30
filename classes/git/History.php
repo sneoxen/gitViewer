@@ -156,7 +156,7 @@ class History {
 	static function getLastActionNumber(){
 		return self::$incActionIncrement-1;
 	}
-
+	
 	/**
 	 *
 	 * @return self

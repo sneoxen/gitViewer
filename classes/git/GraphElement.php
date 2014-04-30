@@ -10,6 +10,7 @@ class GraphElement {
 	const pointMargin=80;
 	const actionArrowSize=25;
 
+	static private $maxDisplayNumber=0;
 	private $lastObjectBranch=null;/*@var $lastObjectBranch \git\Branch */
 
 	private function drawPoint($actionNumber){
@@ -63,23 +64,33 @@ class GraphElement {
 		$branchMerging=Branch::getInst($aActionData['mergingBranch']);
 		
 		$branchOffsetNumber=$branchSource->getDisplayGraphBranchNumber()-$branchMerging->getDisplayGraphBranchNumber();
+		$direction='up';
 		if($branchOffsetNumber<0){
 			//merge with up arrow
 			$branchOffsetNumber*=-1;
+			$top=(($branchMerging->getDisplayGraphBranchNumber())*self::pointMargin)+6-(self::pointSize/3); //6 for border
+			$left=(($actionNumber-1)*self::pointMargin)+(self::pointSize)+6;
+		}
+		else{
+			//merge with down arrow
+			$direction='down';
+			$top=(($branchMerging->getDisplayGraphBranchNumber())*self::pointMargin)+6+(2*self::pointMargin/5); //6 for border
+			$left=(($actionNumber-1)*self::pointMargin)+(self::pointSize)+6;
+		}
 			$arrowBodySize=($branchOffsetNumber*self::pointMargin)+6;//6 for border
 			$realArrowBodySize=sqrt(pow($arrowBodySize-(1.5*self::pointSize),2)+pow(self::pointMargin-1.5*self::pointSize,2));
 			
 			$angle = (self::pointMargin)/($arrowBodySize);
 			$angle = (180*atan($angle))/ pi();
-			$angle=180-$angle;
+			$angle=($direction=='up' ? 180-$angle : $angle);
 			?>
 			<div class="arrowFollowDown <?php echo $branchMerging->getBranchColor() ?>"
 				 style="
 					transform: rotate(-<?php echo $angle?>deg);
 					transform-origin:0 0;
 					height:<?= ($realArrowBodySize) ?>px;
-					top:<?= (($branchMerging->getDisplayGraphBranchNumber())*self::pointMargin)+6-(self::pointSize/3); //6 for border?>px;
-					left:<?= (($actionNumber-1)*self::pointMargin)+(self::pointSize)+6 ?>px">
+					top:<?= $top ?>px;
+					left:<?= $left ?>px">
 				<span class="body" style="
 					background: linear-gradient(
 						to bottom,
@@ -92,12 +103,6 @@ class GraphElement {
 				<span class="endWhite"></span>
 				<span class="end <?= $branchSource->getBranchColor() ?>"></span>
 			</div><?php
-					
-		}
-		else{
-			//merge with down arrow
-			
-		}
 		
 		//var_dump($branchOffsetNumber);
 	}
@@ -186,5 +191,13 @@ class GraphElement {
 			<span class="endWhite"></span>
 			<span class="end <?php echo $this->lastObjectBranch->getBranchColor() ?>"></span>
 		</div><?php
+	}
+	
+	static function setMaxDisplayNumber($number){
+		self::$maxDisplayNumber=$number;
+	}
+	
+	static function getMaxDisplayNumber(){
+		return self::$maxDisplayNumber;
 	}
 }
