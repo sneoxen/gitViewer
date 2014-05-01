@@ -176,8 +176,8 @@ class GraphElement {
 					elseif($aActionInfo['type']=='checkout'){
 						echo'<br /><strong>Source branch</strong> : '.$aActionInfo['sourceBranch'];
 					}
-					echo'<br />LastActionNumber : '.$this->lastObjectBranch->getLastActionNumber();
-					echo'<br />Actual action : '.$actionNumber;
+					/*echo'<br />LastActionNumber : '.$this->lastObjectBranch->getLastActionNumber();
+					echo'<br />Actual action : '.$actionNumber;*/
 				?>
 			</div>
 		</div><?php
@@ -185,7 +185,17 @@ class GraphElement {
 
 	function drawArrowFollow($actionNumber){
 		$nextActionNumber=$this->lastObjectBranch->getNextActionNumber($actionNumber);
-		if($nextActionNumber-$actionNumber<=0) return false;
+		
+		if($nextActionNumber-$actionNumber<=0) {
+			
+			//if  us alive branch then $nextAction is  last action
+			// else retuen false
+			
+			if($this->lastObjectBranch->isAlive() && $nextActionNumber<History::getLastActionNumber()){
+				$nextActionNumber=History::getLastActionNumber();
+			}
+			else return false;
+		}
 		?><div class="arrowFollowRight" style="width:<?= ($nextActionNumber-$actionNumber)*(self::pointMargin)-50 ?>px;top:<?= ($this->lastObjectBranch->getDisplayGraphBranchNumber()*self::pointMargin) ?>;left:<?= ($actionNumber*self::pointMargin)+self::pointSize+15  ?>px">
 			<span class="body <?php echo $this->lastObjectBranch->getBranchColor() ?>"></span>
 			<span class="endWhite"></span>

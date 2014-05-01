@@ -9,7 +9,7 @@ class Interpretor {
 	function __construct($projectPathFile){
 		Executor::getInst()->setPathFile($projectPathFile);
 		$this->createHistoryLine();
-		$this->rewriteBranchNumberDisplay();
+		$this->defineActiveBranch();
 		$this->orderBranchByLifeTime();
 		$this->displayGraph();
 	}
@@ -22,8 +22,8 @@ class Interpretor {
 
 	}
 
-	function rewriteBranchNumberDisplay(){
-		Executor::getInst()->getActiveBranch();
+	function defineActiveBranch(){
+		Executor::getInst()->getAndSetActiveBranch();
 	}
 
 	function orderBranchByLifeTime(){
@@ -45,7 +45,7 @@ class Interpretor {
 					$lifeBranchLastNumber=Branch::getInst($branchLifeName)->getLastActionNumber();// last action number
 							
 					// if begin action number of new branch is greater than life branch, then delete  this branch from life branch array
-					if($newBranchBeginActionNumber>$lifeBranchLastNumber)
+					if($newBranchBeginActionNumber>$lifeBranchLastNumber && !Branch::getInst($branchLifeName)->isAlive())
 						unset($aBackupLifeBranch[$key]);
 				}
 				$aBranchLife=$aBackupLifeBranch;
@@ -66,7 +66,10 @@ class Interpretor {
 
 	function displayGraph(){
 		$oGraphElement=new GraphElement();
-
+		
+		//get active branch
+		
+		
 		/*@var $oBranch Branch*/
 		foreach(Branch::getAllBranch() as $branchName=>$oBranch){
 			$oGraphElement->drawBranch($branchName);

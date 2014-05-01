@@ -25,6 +25,7 @@ class Branch {
 	private $displayGraphBranchNumber=0;
 	private $isActualWorkingBranch=false;
 	private $branchName=null;
+	private $isAlive=false;
 
 
 	private function __construct($branchName){
@@ -32,8 +33,17 @@ class Branch {
 		$this->branchName=$branchName;
 	}
 
+	function setAlive(){
+		$this->isAlive=true;
+	}
+	
+	function isAlive(){
+		return $this->isAlive;
+	}
+	
 	function setActualWorkingBranch(){
 		$this->isActualWorkingBranch=true;
+		$this->setAlive();
 	}
 
 	function addAction($type,$actionNumber){

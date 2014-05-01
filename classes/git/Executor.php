@@ -38,13 +38,14 @@ class Executor {
 		return $cmdOutpout;
 	}
 
-	function getActiveBranch(){
+	function getAndSetActiveBranch(){
 		$aActualBranch=$this->execGitCmd('branch');
-		foreach($aActualBranch as &$branchName){
+		foreach($aActualBranch as $branchName){
 			if(substr($branchName,0,1=='*')) Branch::getInst(substr($branchName,2))->setActualWorkingBranch();
-			$branchName=substr($branchName,2);
+			else Branch::getInst(substr($branchName,2))->setAlive();
+			//$branchName=substr($branchName,2);
 		}
-		return $aActualBranch;
+		//return $aActualBranch;
 	}
 
 	function getCmd($index=null){
